@@ -1,13 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { ListGroup } from "react-bootstrap";
 function ListTodo(props) {
-  const itemTodo = props.list.map((item) => <ListGroup.Item as="li">{item}</ListGroup.Item>)
+  useEffect(() => {
+    props.setTodos(JSON.parse(localStorage.getItem("todos")));
+  }, []);
+  let itemGroup = props.todos
+    ? props.todos.map((todo, index) => {
+        <li key={todo.id}>{todo.title} <span>close</span></li>;
+      })
+    : "";
   return (
     <>
-      {/* <ul>{itemTodo}</ul> */}
-      <ListGroup as="ul">
-        {itemTodo}
-      </ListGroup>
+      <ul>{itemGroup}</ul>
     </>
   );
 }

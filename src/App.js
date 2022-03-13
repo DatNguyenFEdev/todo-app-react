@@ -1,20 +1,18 @@
 import "./App.css";
 import ListTodo from "./components/ListToDo.jsx";
 import Todo from "./components/Todo.jsx";
-import React, { useState } from 'react';
+import React, { useState, useEffect} from 'react';
 
 
 import {Nav, Container} from 'react-bootstrap'
 function App() {
+  const [todo, setTodo] = useState('')
   const [todos, setTodos] = useState([])
+  useEffect(() =>{
+    localStorage.setItem('todos',JSON.stringify(todos) )
+  }, [todos])
 
-  const handleSubmit = (data)=> {
-    setTodos([data,...todos])
-    localStorage.setItem('todos', JSON.stringify(todos))
-    const newTodos = JSON.parse(localStorage.getItem('todos'))
-    setTodos(newTodos)
-    console.log(todos)
-  }
+
   return (
     <div className="App">
       <Container>
@@ -35,8 +33,9 @@ function App() {
         </Nav.Item>
       </Nav>
       <h1>TodoApp</h1>
-      <Todo onAdd={handleSubmit}/>
-      <ListTodo list={todos} />
+      <Todo todo={todo} setTodo={setTodo} todos={todos} setTodos={setTodos} className="bg-dark mb-5"/>
+      <ListTodo todos={todos} setTodos={setTodos}/>
+      {todos.map((item,index)=> <div key={index}>{item.title}</div>)}
       </Container>
     </div>
   );
