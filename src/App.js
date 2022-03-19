@@ -10,11 +10,15 @@ function App() {
   const [todos, setTodos] = useState([])
   useEffect(() =>{
     localStorage.setItem('todos',JSON.stringify(todos) )
-  }, [todos])
+  }, [todos]);
+  const styleApp = {
+    height: 'auto',
+    paddingBottom: '30px'
+  }
 
 
   return (
-    <div className="App">
+    <div className="App" className="bg-dark mb-5" style={styleApp}>
       <Container>
       <Nav activeKey="/home" onSelect={(selectedKey) => alert("Comming soon")} className="bg-dark mb-5">
         <Nav.Item>
@@ -32,10 +36,9 @@ function App() {
           </Nav.Link>
         </Nav.Item>
       </Nav>
-      <h1>TodoApp</h1>
-      <Todo todo={todo} setTodo={setTodo} todos={todos} setTodos={setTodos} className="bg-dark mb-5"/>
+      <h1 style={{color: 'white'}} className="text-center mb-3">Todos List Myself</h1>
+      <Todo todo={todo} setTodo={setTodo} todos={todos} setTodos={setTodos} className="bg-dark"/>
       <ListTodo todos={todos} setTodos={setTodos}/>
-      {todos.map((item,index)=> <div key={index}>{item.title}</div>)}
       </Container>
     </div>
   );
