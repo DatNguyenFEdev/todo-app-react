@@ -2,13 +2,6 @@ import React, { useEffect, useRef, useState} from "react";
 import { ListGroup, Button, Row, Col, InputGroup, FormControl } from "react-bootstrap";
 function ListTodo(props) {
   let inputEl = useRef();
-  let [isCompleted, setIsCompleted] = useState(false)
-  let Completed = {
-    textDecoration: 'line-through'
-  }
-  let unCompleted = {
-    textDecoration: 'none'
-  }
   useEffect(() => {
     props.setTodos(JSON.parse(localStorage.getItem("todos")));
   }, []);
@@ -17,14 +10,21 @@ function ListTodo(props) {
     props.setTodos(newTodos);
     return localStorage.setItem("todos", JSON.stringify(newTodos));
   }
-  function handleUpdate() {
-    console.log(inputEl.current);
+  function handleUpdate(id) {
+    let disibleTodo = props.todos.find((todo) => todo.id === id); 
+    disibleTodo.check = !disibleTodo.check;
+    let newTodos = props.todos.filter(todo => todo.id !== id);
+    // newTodos.map(todo=> {
+    //   todo.check = !disibleTodo.check;
+    // })
+    props.setTodos([disibleTodo,...newTodos]);
   }
   function updateStatus(id) {
-    let newTodos = props.todos.find(todo=> todo.id ===id)
-    console.log(newTodos);
-    // props.setTodos([{...newTodos,isCompleted: true}, ...props.todos])
-    setIsCompleted(!isCompleted);
+    inputEl.current.style.cursor = 'pointer';
+    let selectTodo = props.todos.find(todo=> todo.id ===id)
+    selectTodo.completed = !selectTodo.completed
+    let newTodos = props.todos.filter(todo => todo.id !== id)
+    props.setTodos([selectTodo,...newTodos]);
   }
   return (
     <>
@@ -34,11 +34,15 @@ function ListTodo(props) {
               return (
                 <ListGroup.Item key={todo.id}>
                   <Row>
-                    <Col lg="9">
+                    <Col lg='4'>
+                      <strong>Double click to completed</strong>
+                    </Col>
+                    <Col lg="5">
                       <InputGroup onDoubleClick={()=> {updateStatus(todo.id)}}>
                         <FormControl ref={inputEl} className={todo.id} 
                         value={todo.title} 
-                        style={isCompleted ? unCompleted : Completed} disabled 
+                        style={{'textDecoration': todo.completed ? 'line-through' : 'none'}} 
+                        disabled={todo.check ? '': 'disabled'}
                         ></FormControl>
                       </InputGroup>
                     </Col>
@@ -48,7 +52,7 @@ function ListTodo(props) {
                       </Button>
                     </Col>
                     <Col lg="2">
-                      <Button variant="warning" onClick={() => handleUpdate()}>
+                      <Button variant="warning" onClick={() => handleUpdate(todo.id)}>
                         Update
                       </Button>
                     </Col>

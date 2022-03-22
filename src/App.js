@@ -18,7 +18,7 @@ function App() {
 
 
   return (
-    <div className="App" className="bg-dark mb-5" style={styleApp}>
+    <div className="App bg-dark mb-5" style={styleApp}>
       <Container>
       <Nav activeKey="/home" onSelect={(selectedKey) => alert("Comming soon")} className="bg-dark mb-5">
         <Nav.Item>
