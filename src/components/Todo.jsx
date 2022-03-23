@@ -3,10 +3,13 @@ import { Button, InputGroup, FormControl } from "react-bootstrap";
 import { v4 as uuidv4 } from "uuid";
 
 function Todo({ todo, todos, setTodos, setTodo }) {
+
+
   let inputEl = useRef(null);
 
   function handleSubmit() {
-      setTodos([{ id: uuidv4(), title: todo, completed: false, check: false }, ...(todos || [])]);
+    const timeNow = new Date();
+      setTodos([{ id: uuidv4(), title: todo, completed: false, check: false, createdAt: timeNow.getTime() }, ...(todos || [])]);
       setTodo("");
       inputEl.current.focus();
   }
@@ -26,6 +29,7 @@ function Todo({ todo, todos, setTodos, setTodo }) {
         <Button
           variant="outline-secondary"
           id="button-addon1"
+          className="bg-dark"
           onClick={() => {
             handleSubmit();
           }}

@@ -18,9 +18,9 @@ function App() {
 
 
   return (
-    <div className="App bg-dark mb-5" style={styleApp}>
+    <div className="App mb-5" style={styleApp}>
       <Container>
-      <Nav activeKey="/home" onSelect={(selectedKey) => alert("Comming soon")} className="bg-dark mb-5">
+      <Nav activeKey="/home" onSelect={(selectedKey) => alert("Comming soon")} className=" mb-5">
         <Nav.Item>
           <Nav.Link href="/home">Home</Nav.Link>
         </Nav.Item>
