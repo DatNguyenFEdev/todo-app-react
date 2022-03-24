@@ -18,12 +18,15 @@ function ListTodo(props) {
     props.setTodos(newTodos);
     return localStorage.setItem("todos", JSON.stringify(newTodos));
   }
+
   function handleUpdate(id) {
+    inputEl.current.focus()
     let disibleTodo = props.todos.find((todo) => todo.id === id);
     disibleTodo.check = !disibleTodo.check;
     let newTodos = props.todos.filter((todo) => todo.id !== id);
     props.setTodos([disibleTodo, ...newTodos]);
   }
+
   function updateStatus(id) {
     let newArray = [];
     props.todos.map((todo) => {
